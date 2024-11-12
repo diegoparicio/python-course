@@ -13,6 +13,7 @@ from regresion import *
 
 # Título de la aplicación
 st.title("FutboliStats: Liga, Premier, Serie A")
+st.write("Creado por @diegoparicio")
 
 #_________________________________________________________________
 # Agrupar los datos de jugadores
