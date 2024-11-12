@@ -67,6 +67,7 @@ jugador = st.selectbox("Selecciona un jugador:", df_agrupado_f['jugador'])
 # Slider para el número de jugadores similares a mostrar
 topn = st.slider("Número de jugadores similares a mostrar:", 1, 10, 5)
 
+'''
 tipo_similitud = (st.selectbox("Filtro por posición:", ["Cualquiera", "Identica"])).lower()
 
 if tipo_similitud == "identica":
@@ -90,6 +91,13 @@ elif tipo_similitud == "cualquiera":
 
     # Mostrar resultados
     st.write(f"Jugadores similares a {jugador}:")
+'''
+
+# Calcular los jugadores más similares
+resultados_similares = jugadores_similares(jugador, topn, df_agrupado_f)
+
+# Mostrar resultados
+st.write(f"Jugadores similares a {jugador}:")
 
 st.write(resultados_similares)
 
