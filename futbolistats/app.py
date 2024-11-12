@@ -64,23 +64,33 @@ st.header("Jugadores Similares (F)")
 
 jugador = st.selectbox("Selecciona un jugador:", df_agrupado_f['jugador'])
 
-# Obtener la posición del jugador seleccionado
-posicion_jugador = df_agrupado_f[df_agrupado_f['jugador'] == jugador]['posicion'].iloc[0]
-
-# Filtrar el dataframe para jugadores de la misma posición
-df_misma_posicion = df_agrupado_f[df_agrupado_f['posicion'] == posicion_jugador]
-
 # Slider para el número de jugadores similares a mostrar
 topn = st.slider("Número de jugadores similares a mostrar:", 1, 10, 5)
 
-# Calcular los jugadores más similares
-# resultados_similares = jugadores_similares(jugador, topn, df_agrupado_f)
+tipo_similitud = (st.selectbox("Filtro por posición:", ["Cualquiera", "Identica"])).lower()
 
-# Calcular los jugadores más similares (solo entre jugadores de la misma posición)
-resultados_similares = jugadores_similares(jugador, topn, df_misma_posicion)
+if tipo_similitud == "identica":
 
-# Mostrar resultados
-st.write(f"Jugadores similares a {jugador}, en posición: {posicion_jugador}:")
+    # Obtener la posición del jugador seleccionado
+    posicion_jugador = df_agrupado_f[df_agrupado_f['jugador'] == jugador]['posicion'].iloc[0]
+
+    # Filtrar el dataframe para jugadores de la misma posición
+    df_misma_posicion = df_agrupado_f[df_agrupado_f['posicion'] == posicion_jugador]
+
+    # Calcular los jugadores más similares (solo entre jugadores de la misma posición)
+    resultados_similares = jugadores_similares(jugador, topn, df_misma_posicion)
+
+    # Mostrar resultados
+    st.write(f"Jugadores similares a {jugador}, en posición: {posicion_jugador}:")
+
+elif tipo_similitud == "cualquiera":
+
+    # Calcular los jugadores más similares
+    resultados_similares = jugadores_similares(jugador, topn, df_agrupado_f)
+
+    # Mostrar resultados
+    st.write(f"Jugadores similares a {jugador}:")
+
 st.write(resultados_similares)
 
 # Mostrar gráfico de similitud
