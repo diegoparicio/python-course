@@ -120,8 +120,8 @@ def visualizar_prediccion_promedio(df_jugador_stat, pred_df, stat, jornadas_disp
 
     plt.plot(pred_df['jornada'], pred_df['total_acumulado'], label='Predicción Promedio', color='red')
     # Agregar marker solo en el primer y último punto
-    # plt.plot(pred_df['jornada'].iloc[0], pred_df['total_acumulado'].iloc[0], color='orange', marker='o')
-    # plt.plot(pred_df['jornada'].iloc[-1], pred_df['total_acumulado'].iloc[-1], color='orange', marker='o')
+    plt.plot(pred_df['jornada'].iloc[0], pred_df['total_acumulado'].iloc[0], color='red', marker='o')
+    plt.plot(pred_df['jornada'].iloc[-1], pred_df['total_acumulado'].iloc[-1], color='red', marker='o')
 
     plt.title(f'{jugador}: Predicción de {stat.capitalize()}')
     plt.xlabel('Jornada')
