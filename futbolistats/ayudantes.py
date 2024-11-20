@@ -4,6 +4,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from math import pi
+import statsmodels.api as sm
+import numpy as np
 
 #_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
@@ -119,3 +121,5 @@ def generar_grafico_radar_2(jugador1_data, jugador2_data, jugador1, jugador2, po
 
     # Devolver el objeto 'fig'
     return fig
+
+#_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
