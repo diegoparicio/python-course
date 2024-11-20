@@ -5,9 +5,12 @@ import pandas as pd
 import numpy as np
 from ayudantes import *
 from logica import *
-from poison import *
 
-from regresion import *
+from promedio import *
+from lineal import *
+from lineal_torch import *
+
+from sklearn.linear_model import LinearRegression
 
 #_________________________________________________________________
 
@@ -137,11 +140,13 @@ st.header("Predicción Goles y Asistencias")
 
 #_________________________________________________________________
 
+st.write("En este apartado se predice el número de goles y asistencias de un jugador para las jornadas futuras. Debe seleccionar los datos siguientes y se irán generando los gráficos y predicciones correspondientes.")
+
 # Calcular el máximo de jornadas disputadas entre todas las ligas
 jornadas_disputadas_max = calcular_jornadas_disputadas(df)
 
 # Valor base para el slider
-jornadas_base = 10
+jornadas_base = jornadas_disputadas_max
 
 # Slider para las jornadas disputadas
 jornadas_disputadas = st.slider("Jornadas Disputadas", min_value=5, max_value=jornadas_disputadas_max, value=jornadas_base)
@@ -153,12 +158,55 @@ df_jugador_stat, jugador, stat_a_predecir = generar_df_jugador_stat(df, jornadas
 
 pred_df, jornadas_a_predecir = generar_pred_df(df_jugador_stat, jornadas_disputadas)
 
-#_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+#_________________________________________________________________
 
-st.subheader("Predicción con Poison")
+# jornada_predicha = st.selectbox("Elegir una jornada para predecir", range((jornadas_disputadas_max+1), 39))
 
-fig = generar_grafico_predicion(df_jugador_stat, pred_df, stat_a_predecir, jornadas_disputadas, jornadas_a_predecir, jugador)
+st.write("También puede predecir para una jornada concreta. Debajo del gráfico obtendrá el dato de predicción.")
+
+# Slider para la jornada a predecir
+jornada_predicha = st.number_input(
+    "Número de jornada",
+    min_value=jornadas_disputadas_max + 1,
+    max_value=jornadas_disputadas + jornadas_a_predecir,
+    value=jornadas_disputadas + jornadas_a_predecir,
+    step=1
+)
+
+#_________________________________________________________________
+
+st.subheader("Predicción por Promedio") # Anteriormente "Predicción por Poisson"
+
+fig = visualizar_prediccion_promedio(df_jugador_stat, pred_df, stat_a_predecir, jornadas_disputadas, jornadas_a_predecir, jugador)
 st.pyplot(fig)
+
+# Predicción para jornada específica
+st.write(f"**J{jornada_predicha} : {pred_df.loc[pred_df['jornada'] == jornada_predicha, 'total_acumulado'].values[0]:.2f} {stat_a_predecir}**")
+
+# st.markdown('<p style="color:orange; font-size:20px;"><b>Texto en negrita y azul</b></p>', unsafe_allow_html=True)
+# st.markdown(
+#     f'<p style="color:orange; font-size:20px;"><b>Jornada {jornada_predicha}: {pred_df.loc[pred_df["jornada"] == jornada_predicha, "total_acumulado"].values[0]:.2f} {stat_a_predecir}</b></p>', 
+#     unsafe_allow_html=True
+# )
+
+#_________________________________________________________________
+
+st.subheader("Predicción con Regresión Lineal")
+
+# Preparar los datos
+X = df_jugador_stat[['jornada']]
+y = df_jugador_stat['total_acumulado']
+
+# Crear y ajustar el modelo
+modelo_lineal = LinearRegression()
+modelo_lineal.fit(X, y)
+
+fig = visualizar_regresion_lineal(X, y, modelo_lineal, jugador, stat_a_predecir, jornadas_disputadas, jornadas_a_predecir)
+st.pyplot(fig)
+
+# Calcular predicción para jornada específica
+prediccion_jornada = modelo_lineal.predict([[jornada_predicha]])[0]
+st.write(f"**J{jornada_predicha} : {prediccion_jornada:.2f} {stat_a_predecir}**")
 
 #_________________________________________________________________
 
@@ -216,13 +264,18 @@ print(y_preds == y_preds_loaded)
 
 # Nuevos datos para predecir
 nuevos_datos = torch.tensor([float(x) for x in range(int(jornadas_disputadas+1), (jornadas_disputadas+1) + jornadas_a_predecir, 1)])  # Sí, incluye hasta 38.0 porque range(n) va de 0 a n-1
+print("nuevos_datos: ", nuevos_datos)
 
 # Hacer predicciones con el modelo cargado
 nuevas_predicciones = hacer_predicciones(nuevos_datos, model_loaded)
+print("nuevas_predicciones: ", nuevas_predicciones)
 
-print("Nuevas predicciones: ", nuevas_predicciones)
-
-fig = plot_predictions_new(x_train, y_train, x_test, y_test, jugador, stat_a_predecir,predictions=y_preds_loaded, nuevos_datos=nuevos_datos, nuevas_predicciones=nuevas_predicciones)
+fig = visualizar_regresion_lineal_pytorch(x_train, y_train, x_test, y_test, jugador, stat_a_predecir, predictions=y_preds_loaded, nuevos_datos=nuevos_datos, nuevas_predicciones=nuevas_predicciones)
 st.pyplot(fig)
+
+# Encontrar la predicción para la jornada específica
+indice_jornada = jornada_predicha - (jornadas_disputadas + 1)  # Ajustar el índice
+prediccion_pytorch = nuevas_predicciones[indice_jornada].item()
+st.write(f"**J{jornada_predicha} : {prediccion_pytorch:.2f} {stat_a_predecir}**")
 
 #_________________________________________________________________
