@@ -167,8 +167,8 @@ def visualizar_regresion_lineal_pytorch(x_train, y_train, x_test, y_test, jugado
         plt.scatter(x_test, predictions, c="green", marker='o', label="Predicciones")
     if nuevos_datos is not None and nuevas_predicciones is not None:
         plt.plot(nuevos_datos, nuevas_predicciones, c="red", label="Nuevas predicciones")
-        # plt.plot(nuevos_datos[0], nuevas_predicciones[0], color='red', marker='o')
-        # plt.plot(nuevos_datos[-1], nuevas_predicciones[-1], color='red', marker='o')
+        plt.plot(nuevos_datos[0], nuevas_predicciones[0], color='red', marker='o')
+        plt.plot(nuevos_datos[-1], nuevas_predicciones[-1], color='red', marker='o')
     
     plt.title(f'{jugador}: Predicción de {stat.capitalize()}')
     plt.xlabel('Jornada')
