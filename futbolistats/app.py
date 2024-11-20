@@ -76,7 +76,16 @@ resultados_similares = jugadores_similares(jugador, topn, df_agrupado_f)
 # Mostrar resultados
 st.write(f"Jugadores similares a {jugador}:")
 
-st.write(resultados_similares)
+# Convertir los resultados a DataFrame con el formato correcto
+df_similares = pd.DataFrame(resultados_similares.items(), columns=['jugador', 'similitud'])
+
+# Obtener los equipos de los jugadores similares
+jugadores_equipos = df_agrupado_f[['jugador', 'equipo']].set_index('jugador')
+resultados_con_equipos = df_similares.set_index('jugador').join(jugadores_equipos)
+
+# Reordenar las columnas para mostrar primero el equipo
+resultados_con_equipos = resultados_con_equipos[['equipo', 'similitud']]
+st.write(resultados_con_equipos)
 
 # Mostrar gráfico de similitud
 fig = generar_grafico_similitud(resultados_similares, jugador)
