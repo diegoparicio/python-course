@@ -39,7 +39,7 @@ def generar_grafico_similitud(jugadores_similares, jugador):
     Genera un gráfico de barras con las similitudes entre jugadores.
     """
     fig, ax = plt.subplots(figsize=(5, 4))
-    sns.barplot(x=jugadores_similares.index, y=jugadores_similares.values, ax=ax)
+    sns.barplot(x=jugadores_similares.index, y=jugadores_similares.values, ax=ax, palette='hls')  # Puedes usar otras paletas como 'Set3', 'rainbow', 'husl', 'hls', 'pastel'
     
     ax.set_xlabel('Jugadores')
     ax.set_ylabel('Similitud')
