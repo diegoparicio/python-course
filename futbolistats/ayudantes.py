@@ -43,7 +43,7 @@ def generar_grafico_similitud(jugadores_similares, jugador):
     
     ax.set_xlabel('Jugadores')
     ax.set_ylabel('Similitud')
-    ax.set_title(f'Similitud con Jugador {jugador}')
+    ax.set_title(f'Similitud con {jugador}')
 
     # Ajustar el ángulo de las etiquetas en el eje x
     plt.xticks(rotation=15, ha='right')  # Girar las etiquetas 45 grados para mejorar la legibilidad

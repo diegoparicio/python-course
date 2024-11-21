@@ -60,12 +60,29 @@ st.dataframe(df_metricas)
 
 #_________________________________________________________________
 
+st.header("Top Jugadores (F)")
+st.write("Cada jugador obtiene una valoración GLOBAL calculada como el promedio de las métricas depuradas respecto a los jugadores que ocupan su misma posición.")
+
+# Slider para seleccionar número de jugadores
+top_n = st.slider("Número de jugadores a mostrar:", 5, 50, 10, key="top_players_slider")
+
+# Obtener y mostrar top jugadores
+top_jugadores = obtener_top_jugadores_global(df_metricas, top_n).reset_index(drop=True)
+top_jugadores.index = top_jugadores.index + 1
+st.dataframe(top_jugadores)
+
+#_________________________________________________________________
+
 st.header("Jugadores Similares (F)")
+st.write("Se calcula la similitud de coseno entre los jugadores en base a sus estadísticas y se muestran los más similares. Los valores de similitud están entre 0 y 1. Más próximo a 1, más similares son los jugadores.")
 
 #jugador_base = "Raphinha"
 # jugador = st.selectbox("Selecciona un jugador:", df_agrupado_f['jugador'], index=df_agrupado_f['jugador'].tolist().index(jugador_base))
 
 jugador = st.selectbox("Selecciona un jugador:", df_agrupado_f['jugador'])
+
+# Obtener la posición del jugador seleccionado
+posicion = df_agrupado_f.loc[df_agrupado_f['jugador'] == jugador, 'posicion'].iloc[0]
 
 # Slider para el número de jugadores similares a mostrar
 topn = st.slider("Número de jugadores similares a mostrar:", 1, 10, 5)
@@ -74,17 +91,17 @@ topn = st.slider("Número de jugadores similares a mostrar:", 1, 10, 5)
 resultados_similares = jugadores_similares(jugador, topn, df_agrupado_f)
 
 # Mostrar resultados
-st.write(f"Jugadores similares a {jugador}:")
+st.write(f"Jugadores similares a {jugador} ({posicion}) :")
 
 # Convertir los resultados a DataFrame con el formato correcto
 df_similares = pd.DataFrame(resultados_similares.items(), columns=['jugador', 'similitud'])
 
 # Obtener los equipos de los jugadores similares
-jugadores_equipos = df_agrupado_f[['jugador', 'equipo']].set_index('jugador')
+jugadores_equipos = df_agrupado_f[['jugador', 'equipo', 'posicion']].set_index('jugador')
 resultados_con_equipos = df_similares.set_index('jugador').join(jugadores_equipos)
 
 # Reordenar las columnas para mostrar primero el equipo
-resultados_con_equipos = resultados_con_equipos[['equipo', 'similitud']]
+resultados_con_equipos = resultados_con_equipos[['equipo', 'posicion', 'similitud']]
 st.write(resultados_con_equipos)
 
 # Mostrar gráfico de similitud
@@ -94,11 +111,12 @@ st.pyplot(fig)
 #_________________________________________________________________
 
 st.header("Gráficos Radiales (F)")
+st.write("Compara 2 jugadores en un gráfico radial de percentiles. El gráfico simple muestra las métricas depuradas de cada jugador, el detallado las estadísticas completas.")
 
 # J1_base = "Raphinha"
 # J2_base = "Lamine Yamal"
 
-opcion_grafico = st.selectbox("Seleccione el tipo de gráfico radial. (Simple: métricas depuradas)", ["Simple", "Detallado"])
+opcion_grafico = st.selectbox("Seleccione el tipo de gráfico radial:", ["Simple", "Detallado"])
 
 # J1 = st.selectbox("Selecciona el primer jugador:", df_agrupado_f['jugador'], index=df_agrupado_f['jugador'].tolist().index(J1_base), key="jugador1")
 # J2 = st.selectbox("Selecciona el segundo jugador:", df_agrupado_f['jugador'], index=df_agrupado_f['jugador'].tolist().index(J2_base), key="jugador2")
