@@ -298,3 +298,22 @@ def generar_percentiles_jugador_df_metricas(jugador, df_metricas):
     return percentiles_jugador_df, posicion_jugador, valor_global
 
 #_________________________________________________________________
+
+def obtener_top_jugadores_global(df_metricas, n=10):
+    # Crear lista para almacenar resultados
+    resultados = []
+    
+    # Calcular valor global para cada jugador
+    for jugador in df_metricas['jugador']:
+        _, _, valor_global = generar_percentiles_jugador_df_metricas(jugador, df_metricas)
+        resultados.append({
+            'jugador': jugador,
+            'equipo': df_metricas[df_metricas['jugador'] == jugador]['equipo'].iloc[0],
+            'posicion': df_metricas[df_metricas['jugador'] == jugador]['posicion'].iloc[0],
+            'GLOBAL': valor_global
+        })
+    
+    # Convertir a DataFrame y ordenar
+    df_top = pd.DataFrame(resultados)
+    df_top = df_top.sort_values('GLOBAL', ascending=False).head(n)
+    return df_top
