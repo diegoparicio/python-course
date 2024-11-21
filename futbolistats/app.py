@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from ayudantes import *
 from logica import *
+from logica import obtener_top_jugadores_global
 
 from promedio import *
 from lineal import *
@@ -64,7 +65,7 @@ st.header("Top Jugadores (F)")
 st.write("Cada jugador obtiene una valoración GLOBAL calculada como el promedio de las métricas depuradas respecto a los jugadores que ocupan su misma posición.")
 
 # Slider para seleccionar número de jugadores
-top_n = st.slider("Número de jugadores a mostrar:", 5, 50, 10, key="top_players_slider")
+top_n = st.slider("Número de jugadores a mostrar:", 5, 10, 5, key="top_players_slider")
 
 # Obtener y mostrar top jugadores
 top_jugadores = obtener_top_jugadores_global(df_metricas, top_n).reset_index(drop=True)
