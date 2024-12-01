@@ -219,7 +219,7 @@ st.write(f"**J{jornada_predicha} : {pred_df.loc[pred_df['jornada'] == jornada_pr
 
 #_________________________________________________________________
 
-st.subheader("Predicción con Regresión Lineal")
+st.subheader("Predicción por Regresión Lineal")
 
 # Preparar los datos
 X = df_jugador_stat[['jornada']]
@@ -239,7 +239,7 @@ st.write(f"**J{jornada_predicha} : {prediccion_jornada:.2f} {stat_a_predecir}**"
 
 #_________________________________________________________________
 
-st.subheader("Predicción con Regresión Lineal (PyTorch)")
+st.subheader("Predicción por Regresión Lineal (PyTorch)")
 
 x_train, y_train, x_test, y_test = generar_datos(df_jugador_stat)
 
