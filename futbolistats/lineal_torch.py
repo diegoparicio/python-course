@@ -9,7 +9,11 @@ def generar_datos(df_jugador_stat):
     # Convertir los datos a tensores de PyTorch
     x = torch.tensor(df_jugador_stat['jornada'].values, dtype=torch.float32)
     y = torch.tensor(df_jugador_stat['total_acumulado'].values, dtype=torch.float32)
-
+    
+    # Normalización Min-Max
+    # x = (x - x.min()) / (x.max() - x.min())
+    # y = (y - y.min()) / (y.max() - y.min())
+    
     train_split = int(0.8 * len(x))
     x_train = x[:train_split]
     y_train = y[:train_split]
@@ -17,10 +21,10 @@ def generar_datos(df_jugador_stat):
     x_test = x[train_split:]
     y_test = y[train_split:]
 
-    print("Datos de x_train: ", x_train)
-    print("\nDatos de y_train: ", y_train)
-    print("\nDatos de x_test: ", x_test)
-    print("\nDatos de y_test: ", y_test)
+    #print("Datos de x_train: ", x_train)
+    #print("\nDatos de y_train: ", y_train)
+    #print("\nDatos de x_test: ", x_test)
+    #print("\nDatos de y_test: ", y_test)
 
     return x_train, y_train, x_test, y_test
 
@@ -28,11 +32,12 @@ def generar_datos(df_jugador_stat):
 class LinearRegressionModel(nn.Module):
     def __init__(self):
         super().__init__()
-        self.weights = nn.Parameter(torch.randn(1, requires_grad=True, dtype=torch.float))
-        self.bias = nn.Parameter(torch.randn(1, requires_grad=True, dtype=torch.float))
+        # Inicializar con valores más cercanos a 0
+        self.weights = nn.Parameter(torch.randn(1, requires_grad=True, dtype=torch.float) * 0.1)
+        self.bias = nn.Parameter(torch.randn(1, requires_grad=True, dtype=torch.float) * 0.1)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.weights * x + self.bias # Formula de la regresion lineal
+        return self.weights * x + self.bias
 
 def crear_modelo():
     torch.manual_seed(42)
@@ -50,50 +55,57 @@ def hacer_predicciones(x_test, model):
     return y_preds
 
 
-def entrenar_modelo(x_train, y_train, x_test, y_test, model):
-    # Funcion de perdida
-    loss_fn = nn.L1Loss()
-
-    # Optimizador 
-    optimizer = torch.optim.SGD(params=model.parameters(), lr=0.01)
-
-    torch.manual_seed(42)
-
-    epochs = 100  # ciclos de entrenamiento
-
+def entrenar_modelo(x_train, y_train, x_test, y_test, model, epochs=200, patience=3):
+    loss_fn = nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+    
+    best_test_loss = float('inf')
+    patience_counter = 0
+    best_epoch = 0
+    
     train_loss_values = []
     test_loss_values = []
     epoch_count = []
 
-    # Entrenamiento
     for epoch in range(epochs):
+        # Entrenamiento
         model.train()
-
-        # 1. Hacer predicciones
         y_pred = model(x_train)
-
-        # 2. Calcular la perdida
-        loss = loss_fn(y_pred, y_train)
-
-        # 3. Optimizar las predicciones
+        train_loss = loss_fn(y_pred, y_train)
+        
         optimizer.zero_grad()
-        loss.backward()
+        train_loss.backward()
         optimizer.step()
 
-        # Testing
+        # Evaluación
         model.eval()
         with torch.inference_mode():
             test_pred = model(x_test)
-
-            test_loss = loss_fn(test_pred, y_test.type(torch.float))
-
-            if epoch % 10 == 0:
+            test_loss = loss_fn(test_pred, y_test)
+            
+            if epoch % 1 == 0:
                 epoch_count.append(epoch)
-                train_loss_values.append(loss.detach().numpy())
-                test_loss_values.append(test_loss.detach().numpy())
-                print(f"Epoch {epoch} | MAE Train Loss: {loss} | MAE Test Loss: {test_loss}")
+                train_loss_values.append(train_loss.item())
+                test_loss_values.append(test_loss.item())
+                # print(f"Epoch {epoch} | Train Loss: {train_loss:.4f} | Test Loss: {test_loss:.4f}")
+
+            # Early stopping
+            if test_loss < best_test_loss:
+                best_test_loss = test_loss
+                patience_counter = 0
+                best_model_state = model.state_dict().copy()
+                best_epoch = epoch
+            else:
+                patience_counter += 1
+
+            if patience_counter >= patience:
+                # print(f"\nDetención temprana en epoch {epoch}")
+                print(f"Mejor pérdida de prueba: {best_test_loss:.4f} en el epoch {best_epoch}")
+                model.load_state_dict(best_model_state)
+                break
 
     return epoch_count, train_loss_values, test_loss_values
+
 
 def graficar_perdidas(epoch_count, train_loss_values, test_loss_values):
     fig = plt.figure(figsize=(10, 7))
@@ -148,7 +160,7 @@ def cargar_modelo():
     MODEL_SAVE_PATH = MODEL_PATH / MODEL_NAME
 
     model_loaded = LinearRegressionModel()
-    model_loaded.load_state_dict(torch.load(f=MODEL_SAVE_PATH))
+    model_loaded.load_state_dict(torch.load(f=MODEL_SAVE_PATH, weights_only=True))
 
     print("Cargado el modelo: ", model_loaded.state_dict())
 

@@ -23,7 +23,7 @@ def cargar_datos(ruta_csv):
     df.columns = [
         'jugador', 'equipo', 'numero', 'nacionalidad', 'posicion', 
         'edad', 'minutos', 'goles', 'asistencias', 'penaltis_marcados', 'penaltis_intentados',
-        'total_tiros', 'tiros_a_puerta', 'amarillas', 'rojas', 'contactos', 'accion_defensiva', 'cortes',
+        'total_tiros', 'tiros_a_puerta', 'amarillas', 'rojas', 'contactos', 'tackles', 'interceptaciones',
         'bloqueos', 'goles_esp', 'goles_esp_np', 'goles_esp_asistidos', 'acciones_creacion_tiro', 'acciones_creacion_gol', 
         'pases_completados', 'pases_intentados', 'pases_completados_p', 'pases_progresivos', 
         'conducciones', 'conducciones_progresivas', 'intentos_regate', 'regates_exitosos', 'fecha'
@@ -64,8 +64,8 @@ def generar_df_agrupado (df):
 
     columnas_a_sumar = [
         'minutos', 'goles', 'asistencias', 'penaltis_marcados', 'penaltis_intentados', 
-        'total_tiros', 'tiros_a_puerta', 'amarillas', 'rojas', 'contactos', 'accion_defensiva', 
-        'cortes', 'bloqueos', 'goles_esp', 'goles_esp_np', 'goles_esp_asistidos', 
+        'total_tiros', 'tiros_a_puerta', 'amarillas', 'rojas', 'contactos', 'tackles', 
+        'interceptaciones', 'bloqueos', 'goles_esp', 'goles_esp_np', 'goles_esp_asistidos', 
         'acciones_creacion_tiro', 'acciones_creacion_gol', 'pases_completados', 'pases_intentados',
         'pases_progresivos', 'conducciones', 'conducciones_progresivas', 'intentos_regate', 'regates_exitosos'
     ]
@@ -116,8 +116,8 @@ def generar_df_por_partido (df_agrupado):
     # Definir las columnas que deseas dividir por el número de partidos
     columnas_a_operar = [
         'goles', 'asistencias', 'penaltis_marcados', 'penaltis_intentados', 
-        'total_tiros', 'tiros_a_puerta', 'amarillas', 'rojas', 'contactos', 'accion_defensiva', 
-        'cortes', 'bloqueos', 'goles_esp', 'goles_esp_np', 'goles_esp_asistidos', 
+        'total_tiros', 'tiros_a_puerta', 'amarillas', 'rojas', 'contactos', 'tackles', 
+        'interceptaciones', 'bloqueos', 'goles_esp', 'goles_esp_np', 'goles_esp_asistidos', 
         'acciones_creacion_tiro', 'acciones_creacion_gol', 'pases_completados', 'pases_intentados',
         'pases_progresivos', 'conducciones', 'conducciones_progresivas', 'intentos_regate', 'regates_exitosos'
     ]
@@ -184,7 +184,7 @@ def generar_df_metricas (df_agrupado_f):
     df_metricas['REGATE'] = df_agrupado_f['regates_exitosos']
     df_metricas['CREACION'] = df_agrupado_f[['acciones_creacion_tiro', 'acciones_creacion_gol', 'pases_progresivos', 'conducciones_progresivas']].sum(axis=1)
     df_metricas['ATAQUE'] = df_agrupado_f[['goles', 'asistencias', 'tiros_a_puerta']].sum(axis=1)
-    df_metricas['DEFENSA'] = (df_agrupado_f['pases_completados_p'] * (df_agrupado_f['cortes'] + df_agrupado_f['bloqueos'] + df_agrupado_f['accion_defensiva']) / 100).round(1)
+    df_metricas['DEFENSA'] = (df_agrupado_f['pases_completados_p'] * (df_agrupado_f['interceptaciones'] + df_agrupado_f['bloqueos'] + df_agrupado_f['tackles']) / 100).round(1)
 
     # Visualizar el DataFrame con las nuevas métricas
     df_metricas = df_metricas[['jugador', 'equipo', 'posicion', 'TIRO', 'ATAQUE', 'REGATE', 'CREACION', 'PASE', 'DEFENSA']]
@@ -231,8 +231,8 @@ def generar_percentiles_jugador_df(jugador, df_agrupado_f):
 
     columnas_a_radiar = [
     'minutos', 'penaltis_marcados', 'penaltis_intentados', 
-    'total_tiros', 'tiros_a_puerta', 'amarillas', 'rojas', 'contactos', 'accion_defensiva', 
-    'cortes', 'bloqueos', 'goles_esp', 'goles_esp_np', 'goles_esp_asistidos', 
+    'total_tiros', 'tiros_a_puerta', 'amarillas', 'rojas', 'contactos', 'tackles', 
+    'interceptaciones', 'bloqueos', 'goles_esp', 'goles_esp_np', 'goles_esp_asistidos', 
     'acciones_creacion_tiro', 'acciones_creacion_gol', 'pases_completados', 'pases_intentados', 'pases_completados_p',
     'goles', 'asistencias', 'pases_progresivos', 'conducciones', 'conducciones_progresivas', 'intentos_regate', 'regates_exitosos'
     ]

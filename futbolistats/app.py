@@ -233,7 +233,8 @@ fig = visualizar_regresion_lineal(X, y, modelo_lineal, jugador, stat_a_predecir,
 st.pyplot(fig)
 
 # Calcular predicción para jornada específica
-prediccion_jornada = modelo_lineal.predict([[jornada_predicha]])[0]
+# prediccion_jornada = modelo_lineal.predict([[jornada_predicha]])[0]
+prediccion_jornada = modelo_lineal.predict(pd.DataFrame({'jornada': [jornada_predicha]}))[0]
 st.write(f"**J{jornada_predicha} : {prediccion_jornada:.2f} {stat_a_predecir}**")
 
 #_________________________________________________________________
@@ -244,6 +245,12 @@ x_train, y_train, x_test, y_test = generar_datos(df_jugador_stat)
 
 # fig = plot_predictions(x_train, y_train, x_test, y_test)
 # st.pyplot(fig)
+
+# print("df_jugador_stat: ", df_jugador_stat)
+# print("x_train: ", x_train)
+# print("y_train: ", y_train)
+# print("x_test: ", x_test)
+# print("y_test: ", y_test)
 
 model = crear_modelo()
 
@@ -286,17 +293,17 @@ y_preds_loaded = hacer_predicciones(x_test, model_loaded)
 
 #_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  
 
-print(y_preds == y_preds_loaded)
+# print(y_preds == y_preds_loaded)
 
 #_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 # Nuevos datos para predecir
 nuevos_datos = torch.tensor([float(x) for x in range(int(jornadas_disputadas+1), (jornadas_disputadas+1) + jornadas_a_predecir, 1)])  # Sí, incluye hasta 38.0 porque range(n) va de 0 a n-1
-print("nuevos_datos: ", nuevos_datos)
+# print("nuevos_datos: ", nuevos_datos)
 
 # Hacer predicciones con el modelo cargado
 nuevas_predicciones = hacer_predicciones(nuevos_datos, model_loaded)
-print("nuevas_predicciones: ", nuevas_predicciones)
+# print("nuevas_predicciones: ", nuevas_predicciones)
 
 fig = visualizar_regresion_lineal_pytorch(x_train, y_train, x_test, y_test, jugador, stat_a_predecir, predictions=y_preds_loaded, nuevos_datos=nuevos_datos, nuevas_predicciones=nuevas_predicciones)
 st.pyplot(fig)
