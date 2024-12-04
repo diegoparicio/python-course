@@ -20,7 +20,7 @@ def obtener_posicion_mas_frecuente(posiciones):
 
 # Diccionario de equivalencias
 equivalencias_posiciones = {
-    'GK': 'PT', 'DF': 'DF', 'MF': 'CC', 'FW': 'DL',
+    'GK': 'PT', 'DF': 'DF', 'MF': 'CC', 'FW': 'DC',
     'FB': 'LT', 'LB': 'LI', 'RB': 'LD', 'CB': 'CT',
     'DM': 'MCD', 'CM': 'MC', 'LM': 'II', 'RM': 'ID',
     'WM': 'INT', 'LW': 'EI', 'RW': 'ED', 'AM': 'MCO'
