@@ -47,7 +47,7 @@ def generar_tabla_compatibilidad(resultado):
         columnwidth = [20] + [10] * (len(resultado_0_with_index.columns) - 1),  # Ajustar el primer valor para el ancho de la columna 'ATRIBUTO'
         header=dict(values=list(resultado_0_with_index.columns),
                     fill_color='lightblue',  # Cambiar color del encabezado
-                    font_color='white',  # Cambiar color de la letra del encabezado a negro
+                    font_color='black',  # Cambiar color de la letra del encabezado a negro
                     align='left'),
         cells=dict(values=[resultado_0_with_index[col] for col in resultado_0_with_index.columns],
                    fill_color='white',  # Cambiar color de las celdas
