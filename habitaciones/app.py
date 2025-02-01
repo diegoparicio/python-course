@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 resultado = None
 
 # Mostrar una gran imagen en la parte superior.
-st.image('habitaciones/media/portada.png', use_container_width=True)
+st.image('habitaciones/media/banner.png', use_container_width=True)
 
 # Insertar un espacio vertical de 60px
 st.markdown(f'<div style="margin-top: 60px;"></div>', unsafe_allow_html=True)
@@ -17,6 +17,7 @@ st.markdown(f'<div style="margin-top: 60px;"></div>', unsafe_allow_html=True)
 # Configurar el sidebar con inputs y un botón.
 with st.sidebar:
     st.header("¿Quién está viviendo ya en el piso?")
+    st.write("Indique ID Inquilino: 1-12000")
     inquilino1 = st.text_input("Inquilino 1")
     inquilino2 = st.text_input("Inquilino 2")
     inquilino3 = st.text_input("Inquilino 3")
