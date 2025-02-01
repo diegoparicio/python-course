@@ -1,9 +1,6 @@
 streamlit
 pandas
-statsmodels
 matplotlib
 scikit-learn
-pandasql
-sqlalchemy
 seaborn
 plotly
