@@ -1,15 +1,6 @@
-<<<<<<< HEAD
 streamlit
 pandas
 matplotlib
 scikit-learn
 seaborn
 plotly
-=======
-streamlit
-pandas
-matplotlib
-scikit-learn
-seaborn
-plotly
->>>>>>> 03faddc4172486e0fe2f8ad4d2713d2c5e0379c0

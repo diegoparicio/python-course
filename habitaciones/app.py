@@ -17,7 +17,7 @@ st.markdown(f'<div style="margin-top: 60px;"></div>', unsafe_allow_html=True)
 # Configurar el sidebar con inputs y un botón.
 with st.sidebar:
     st.header("¿Quién está viviendo ya en el piso?")
-    st.write("Indique ID Inquilino: 1-12000")
+    st.write("Indique ID inquilino: 1-12000")
     inquilino1 = st.text_input("Inquilino 1")
     inquilino2 = st.text_input("Inquilino 2")
     inquilino3 = st.text_input("Inquilino 3")
