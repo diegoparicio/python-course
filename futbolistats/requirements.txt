@@ -8,3 +8,4 @@ sqlalchemy
 seaborn
 torch
 kagglehub
+sigstore
