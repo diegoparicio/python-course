@@ -10,7 +10,7 @@ resultado = None
 
 # Mostrar una gran imagen en la parte superior.
 st.image('habitaciones/media/banner.png', use_container_width=True)
-st.write("Creado por @diegoparicio")
+st.write("@diegoparicio")
 
 # Insertar un espacio vertical de 60px
 st.markdown(f'<div style="margin-top: 60px;"></div>', unsafe_allow_html=True)
