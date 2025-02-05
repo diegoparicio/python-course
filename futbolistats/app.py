@@ -17,7 +17,7 @@ from sklearn.linear_model import LinearRegression
 
 # Título de la aplicación
 # Mostrar una gran imagen en la parte superior.
-st.image('futbolistats/media/portada.png', use_container_width=True)
+st.image('futbolistats/media/portada.png', use_column_width=True)
 
 st.title("LaLiga, Premier League, Serie A")
 st.write("Creado por @diegoparicio")
