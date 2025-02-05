@@ -51,17 +51,17 @@ for columna in columnas_a_codificar:
 st.image('rainforecast/media/portada.png', use_container_width=True)    
 st.write("@diegoparicio")
 
-st.subheader("## Datos de clima registrados (head)")
+st.subheader("Datos de clima registrados (head)")
 st.write(datos.head())
 
 # Mapa de calor de correlación
-st.subheader("## Mapa de Calor de Correlación")
+st.subheader("Mapa de Calor de Correlación")
 plt.figure(figsize=(12,6))
 sns.heatmap(datos.drop('Rain',axis=1).corr(),annot=True)
 st.pyplot(plt)
 
 # Gráficos de dispersión
-st.subheader("## Gráficos de Dispersión")
+st.subheader("Gráficos de Dispersión")
 plt.figure(figsize=(12,4))
 plt.subplot(1,2,1)
 plt.title('Temperatura y Humedad')
@@ -88,7 +88,7 @@ y = datos['Rain_codificada']
 X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.7)
 
 # Regresión Logística
-st.subheader("## Regresión Logística")
+st.subheader("Regresión Logística")
 modelo = LogisticRegression(max_iter=1000)
 modelo.fit(X_train, y_train)
 y_prediccion = modelo.predict(X_test)
@@ -102,7 +102,7 @@ plt.ylabel('Clase Exacta')
 st.pyplot(plt)
 
 # KNeighborsClassifier
-st.subheader("## KNeighborsClassifier")
+st.subheader("KNeighborsClassifier")
 modelo = KNeighborsClassifier()
 modelo.fit(X_train, y_train)
 y_prediccion = modelo.predict(X_test)
@@ -116,7 +116,7 @@ plt.ylabel('Clase Exacta')
 st.pyplot(plt)
 
 # Curvas de Validación para KNeighborsClassifier
-st.subheader("## Curvas de Validación para KNeighborsClassifier")
+st.subheader("Curvas de Validación para KNeighborsClassifier")
 grado = np.arange(1, 21)
 train_score, val_score = validation_curve(KNeighborsClassifier(n_neighbors=5), X, y, param_name='n_neighbors', param_range=grado, cv=5)
 plt.title('Curvas de Validación de KNeighborsClassifier')
@@ -126,7 +126,7 @@ plt.legend()
 st.pyplot(plt)
 
 # DecisionTreeClassifier
-st.subheader("## DecisionTreeClassifier")
+st.subheader("DecisionTreeClassifier")
 modelo = DecisionTreeClassifier()
 modelo.fit(X_train, y_train)
 y_prediccion = modelo.predict(X_test)
@@ -140,7 +140,7 @@ plt.ylabel('Clase Exacta')
 st.pyplot(plt)
 
 # RandomForestClassifier
-st.subheader("## RandomForestClassifier")
+st.subheader("RandomForestClassifier")
 modelo = RandomForestClassifier(n_estimators=10)
 modelo.fit(X_train, y_train)
 y_prediccion = modelo.predict(X_test)
@@ -154,7 +154,7 @@ plt.ylabel('Clase Exacta')
 st.pyplot(plt)
 
 # Curvas de Validación para RandomForestClassifier
-st.subheader("## Curvas de Validación para RandomForestClassifier")
+st.subheader("Curvas de Validación para RandomForestClassifier")
 grado = np.arange(1, 21)
 train_score, val_score = validation_curve(RandomForestClassifier(), X, y, param_name='n_estimators', param_range=grado, cv=5)
 plt.title('Curvas de Validación de RandomForestClassifier')
@@ -164,7 +164,7 @@ plt.legend()
 st.pyplot(plt)
 
 # GaussianNB
-st.subheader("## GaussianNB")
+st.subheader("GaussianNB")
 modelo = GaussianNB()
 modelo.fit(X_train, y_train)
 y_prediccion = modelo.predict(X_test)
@@ -178,7 +178,7 @@ plt.ylabel('Clase Exacta')
 st.pyplot(plt)
 
 # Regresión Lineal
-st.subheader("## Regresión Lineal")
+st.subheader("Regresión Lineal")
 modelo = LinearRegression()
 modelo.fit(X_train, y_train)
 y_prediccion = modelo.predict(X_test)
