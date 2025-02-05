@@ -8,3 +8,4 @@ sqlalchemy
 seaborn
 torch
 kagglehub
+from sigstore import dsse as sigstore_dsse
