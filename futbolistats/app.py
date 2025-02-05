@@ -20,7 +20,7 @@ from sklearn.linear_model import LinearRegression
 st.image('futbolistats/media/portada.png', use_container_width=True)
 
 st.title("LaLiga, Premier League, Serie A")
-st.write("Creado por @diegoparicio")
+st.write("@diegoparicio")
 
 #_________________________________________________________________
 # Agrupar los datos de jugadores
