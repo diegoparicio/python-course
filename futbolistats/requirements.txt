@@ -1,10 +1,10 @@
-streamlit==1.10.0  # Especifica la versión de streamlit
-pandas==1.3.5      # Especifica la versión de pandas
-statsmodels==0.13.2 # Especifica la versión de statsmodels
-matplotlib==3.5.1   # Especifica la versión de matplotlib
-scikit-learn==1.0.2 # Especifica la versión de scikit-learn
-pandasql==0.7.3     # Especifica la versión de pandasql
-sqlalchemy==1.4.27  # Especifica la versión de sqlalchemy
-seaborn==0.11.2     # Especifica la versión de seaborn
-torch==1.10.0       # Especifica la versión de torch
-kagglehub==0.1.0    # Especifica la versión de kagglehub
+streamlit
+pandas
+statsmodels
+matplotlib
+scikit-learn
+pandasql
+sqlalchemy
+seaborn
+torch
+kagglehub
