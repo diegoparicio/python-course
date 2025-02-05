@@ -1,5 +1,5 @@
 streamlit
-kagglehub==0.3.7
+kagglehub
 pandas
 statsmodels
 matplotlib
@@ -8,4 +8,4 @@ pandasql
 sqlalchemy
 seaborn
 torch
-sigstore
+sigstore==3.6.1
