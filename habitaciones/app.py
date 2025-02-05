@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 resultado = None
 
 # Mostrar una gran imagen en la parte superior.
-st.image('habitaciones/media/banner.png')
+st.image('habitaciones/media/portada.png')
 st.write("@diegoparicio")
 
 # Insertar un espacio vertical de 60px
