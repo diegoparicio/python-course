@@ -5,3 +5,4 @@ scikit-learn
 seaborn
 plotly
 kagglehub
+sigstore==3.6.1
