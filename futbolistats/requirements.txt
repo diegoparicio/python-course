@@ -9,5 +9,3 @@ seaborn
 torch
 kagglehub
 sigstore==3.0.0
-google-protobuf
-model-signing
