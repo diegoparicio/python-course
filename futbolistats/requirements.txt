@@ -1,4 +1,5 @@
 streamlit
+kagglehub==0.3.7
 pandas
 statsmodels
 matplotlib
@@ -7,5 +8,3 @@ pandasql
 sqlalchemy
 seaborn
 torch
-kagglehub
-kaggle
