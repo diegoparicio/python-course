@@ -8,4 +8,3 @@ pandasql
 sqlalchemy
 seaborn
 torch
-sigstore==3.6.1
