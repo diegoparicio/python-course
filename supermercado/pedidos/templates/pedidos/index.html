@@ -1,0 +1,33 @@
+<h1>Supermercado</h1>
+<p>Tienda Online</p>
+
+<h2>Productos por Sección</h2>
+
+<form method="POST" action="{% url 'calcular_compra' %}">
+    {% csrf_token %}
+    {% for seccion, datos in productos_por_seccion.items %}
+        <h3>Sección: {{ datos.nombre }}</h3>
+        {% if datos.imagen %}
+            <img src="{{ datos.imagen }}" alt="{{ datos.nombre }}" style="width: 200px; height: auto; margin-bottom: 20px;">
+        {% endif %}
+        <table>
+            <tr>
+                <th>Producto ID</th>
+                <th>Producto Nombre</th>
+                <th>Precio Unitario</th>
+                <th>Cantidad</th>
+            </tr>
+            {% for producto in datos.productos %}
+            <tr>
+                <td>{{ producto.id_producto }}</td>
+                <td>{{ producto.nombre_producto }}</td>
+                <td>{{ producto.precio_unitario }}</td>
+                <td>
+                    <input type="number" name="cantidad_{{ producto.id_producto }}" min="0" value="0">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+    <button type="submit" style="margin-top: 20px;">Añadir a la cesta / Ver cesta</button>
+</form>

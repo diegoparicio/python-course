@@ -1,0 +1,52 @@
+<h1>Cesta de la compra</h1>
+
+<table>
+    <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th>Subtotal</th>
+    </tr>
+    {% for producto in productos_seleccionados %}
+    <tr>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.cantidad }}</td>
+        <td>{{ producto.precio_unitario }}</td>
+        <td>{{ producto.subtotal }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Total: {{ total }}</h2>
+
+<!-- Botón para vaciar la cesta -->
+<form method="POST" action="{% url 'vaciar_cesta' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Vaciar la cesta</button>
+</form>
+
+<h2>Recomendaciones</h2>
+
+<form method="POST" action="{% url 'calcular_compra' %}">
+    {% csrf_token %}
+    {% for producto, recomendaciones_producto in recomendaciones.items %}
+        <h3>Para {{ producto }}:</h3>
+        <table>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+            </tr>
+            {% for recomendacion in recomendaciones_producto %}
+            <tr>
+                <td>{{ recomendacion.consecuente }}</td>
+                <td>
+                    <input type="number" name="cantidad_{{ recomendacion.consecuente }}" min="0" value="0">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+    <button type="submit" style="margin-top: 20px;">Añadir a la cesta</button>
+</form>
+
+<a href="{% url 'index' %}">Volver a la tienda</a>
