@@ -1,0 +1,37 @@
+.devcontainer/
+.vscode/
+93182_steam_games.csv
+App-master/
+Data Analysis.ipynb
+build/
+chatgpt/
+chromedriver-win64 (antiguo)/
+chromedriver-win64/
+clases/
+cnn/
+cursor.txt
+cursor/
+data/
+dist/
+futbolistats/__pycache__/
+futbolistats/otros/
+futbolistats/test/
+habitaciones/__pycache__/
+habitaciones/ejecutar.txt
+habitaciones/metadatos.xlsx
+ipynb/
+laliga2 (not working)/
+linkedin/
+nuevo_entorno/
+previo/
+pyspark/
+pytorch/
+rainforecast/app-previous.py
+rainforecast/git_add.txt
+rainforecast/weather-forecast-classification.ipynb
+rainforecast/weather_forecast_data.csv
+tensorflow_env/
+testing/
+userdata/
+whatsapp/
+supermercado/supermercado.db
