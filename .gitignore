@@ -34,4 +34,4 @@ tensorflow_env/
 testing/
 userdata/
 whatsapp/
-supermercado/supermercado.db
+# supermercado/supermercado.db
