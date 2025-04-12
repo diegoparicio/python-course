@@ -6,7 +6,8 @@ import openpyxl
 
 def index(request):
     # Ruta al archivo Excel
-    secciones_path = 'C:/Users/kskme/Desktop/Python/python-course/supermercado/secciones.xlsx'
+    # secciones_path = 'C:/Users/kskme/Desktop/Python/python-course/supermercado/secciones.xlsx'
+    secciones_path = '/home/supermercado/python-course/supermercado/secciones.xlsx'
     workbook = openpyxl.load_workbook(secciones_path)
     sheet = workbook.active
 
@@ -89,12 +90,24 @@ def calcular_compra(request):
 
         # Generar recomendaciones basadas en las métricas
         for producto_nombre in productos_comprados:
-            # Filtrar las métricas para el producto actual (antecedente) con lift > 1.5
-            recomendaciones_producto = sorted(
-                [m for m in metricas if m['antecedente'] == producto_nombre and m['lift'] >= 1.5],
-                key=lambda x: x['lift'],
-                reverse=True
-            )[:3]  # Obtener los 3 productos con mayor lift
+            recomendaciones_producto = []
+            for m in metricas:
+                if m['antecedente'] == producto_nombre and m['lift'] >= 1.5:
+                    # Buscar el precio del producto recomendado en la base de datos
+                    producto_recomendado = Tickets.objects.filter(
+                        nombre_producto=m['consecuente']
+                    ).values('precio_unitario').first()
+
+                    # Si se encuentra el producto, añadirlo a las recomendaciones
+                    if producto_recomendado:
+                        recomendaciones_producto.append({
+                            'consecuente': m['consecuente'],
+                            'precio': producto_recomendado['precio_unitario'],  # Añadir el precio
+                            'lift': m['lift']
+                        })
+
+            # Ordenar las recomendaciones por lift y obtener las 3 mejores
+            recomendaciones_producto = sorted(recomendaciones_producto, key=lambda x: x['lift'], reverse=True)[:3]
 
             # Añadir las recomendaciones al diccionario si hay resultados
             if recomendaciones_producto:
@@ -116,7 +129,8 @@ import csv
 
 def importar_metricas():
     # Ruta al archivo CSV
-    csv_path = 'C:/Users/kskme/Desktop/Python/python-course/supermercado/reglas.csv'
+    # csv_path = 'C:/Users/kskme/Desktop/Python/python-course/supermercado/reglas.csv'
+    csv_path = '/home/supermercado/python-course/supermercado/reglas.csv'
 
     # Lista para almacenar las métricas
     metricas = []

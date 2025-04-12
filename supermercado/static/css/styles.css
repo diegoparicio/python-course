@@ -1,0 +1,111 @@
+/* Fuente general */
+
+.header-banner {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    height: 80px;
+    width: auto;
+}
+
+.site-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.site-subtitle {
+    font-size: 1rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Títulos */
+h1, h2, h3, h4 {
+    font-weight: 600;
+}
+
+/* Tablas */
+table th {
+    background-color: #343a40;
+    color: white;
+}
+
+table td, table th {
+    vertical-align: middle;
+}
+
+/* Botones personalizados */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #e2e6ea;
+    color: #000;
+}
+
+/* Cards */
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+/* Inputs */
+input[type="number"] {
+    max-width: 80px;
+}
+
+.text-fruta { color: #f81a1a; }
+.text-hierba { color: #28a745; }
+.text-crema { color: whitesmoke; }
+.text-untable { color: yellow; }
+.text-verdura { color: #28a745; }
+.text-lacteo { color: #f8f9fa; }
+.text-bebida { color: #1ed8e6; }
+.text-organico { color: #28a745; }
+.text-default { color: #ffffff; }
+
+.bg-naranja {
+    background-color: #e6a709;
+}

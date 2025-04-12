@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-(sd##96i877zfefo)4=9u26fl^0zlxvoka_1m!!dmqh2cv9998
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['supermercado.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -77,7 +77,8 @@ WSGI_APPLICATION = 'supermercado.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'C:/Users/kskme/Desktop/Python/python-course/supermercado/supermercado.db',
+      # 'NAME': 'C:/Users/kskme/Desktop/Python/python-course/supermercado/supermercado.db',
+        'NAME': '/home/supermercado/python-course/supermercado/supermercado.db',
     }
 }
 
@@ -117,6 +118,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Esta línea es útil para el entorno de desarrollo:
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Asegúrate de que esto apunte a tu carpeta 'static'
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
