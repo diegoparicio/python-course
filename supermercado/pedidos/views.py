@@ -116,7 +116,7 @@ def calcular_compra(request):
         # Guardar los productos seleccionados en la sesión
         request.session['productos_seleccionados'] = productos_seleccionados
 
-        return render(request, 'pedidos/resultado.html', {
+        return render(request, 'pedidos/cesta.html', {
             'productos_seleccionados': productos_seleccionados,
             'total': total,
             'recomendaciones': recomendaciones  # Pasar las recomendaciones al template
@@ -170,8 +170,30 @@ def resultado(request):
     total = round(sum(p['subtotal'] for p in productos_seleccionados), 2) if productos_seleccionados else 0
 
     # Renderizar la plantilla de resultados
-    return render(request, 'pedidos/resultado.html', {
+    return render(request, 'pedidos/cesta.html', {
         'productos_seleccionados': productos_seleccionados,
         'total': total,
         'recomendaciones': {}  # Puedes pasar recomendaciones vacías si no son necesarias
     })
+
+def pagar_compra(request):
+    if request.method == 'POST':
+        # Lógica para procesar el pago
+         # Recuperar los productos seleccionados y el total de la sesión
+        productos_seleccionados = request.session.get('productos_seleccionados', [])
+        total = round(sum(p['subtotal'] for p in productos_seleccionados), 2) if productos_seleccionados else 0
+
+        # Renderizar la plantilla de pago
+        return render(request, 'pedidos/pago.html', {
+            'productos_seleccionados': productos_seleccionados,
+            'total': total
+        })
+    
+def reiniciar_compra(request):
+    if request.method == 'POST':
+        # Eliminar los productos seleccionados de la sesión
+        if 'productos_seleccionados' in request.session:
+            del request.session['productos_seleccionados']
+        # También puedes limpiar toda la sesión si es necesario:
+        # request.session.flush()
+    return redirect('index')  # Redirigir a la página de resultados
