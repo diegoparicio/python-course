@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
 
 # 2. CARGA DE DATOS
-df = pd.read_csv('dataset_inquilinos.csv', index_col = 'id_inquilino')
+df = pd.read_csv('habitaciones/dataset_inquilinos.csv', index_col = 'id_inquilino')
 
 df.columns = [
 'horario', 'bioritmo', 'nivel_educativo', 'leer', 'animacion', 
