@@ -1,8 +1,0 @@
-streamlit
-pandas
-matplotlib
-scikit-learn
-seaborn
-plotly
-kagglehub
-sigstore
